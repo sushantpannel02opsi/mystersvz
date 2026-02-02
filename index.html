@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mystersvz | Elite Motion Design</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --accent: #bb86fc; 
+            --bg: #030303;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --nav-bg: rgba(10, 10, 10, 0.8);
+            --border: rgba(255, 255, 255, 0.08);
+            --text-dim: #888;
+            --gold: #ffd700;
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg);
+            color: #ffffff;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* Fixed Full-Screen Snow Background */
+        #particles-js { 
+            position: fixed; 
+            width: 100%; 
+            height: 100%; 
+            z-index: -1; 
+            top: 0; 
+            left: 0;
+            background: radial-gradient(circle at center, #0a0a0a 0%, #030303 100%);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed; top: 0; width: 100%;
+            z-index: 1000; display: flex;
+            justify-content: center; padding: 20px 0;
+        }
+
+        .nav-container {
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            padding: 10px 25px;
+            border-radius: 100px;
+            display: flex; gap: 20px;
+        }
+
+        .nav-container a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: 0.3s;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .nav-container a:hover, .nav-container a.active { color: var(--accent); }
+
+        /* View Content Management */
+        .view { display: none; min-height: 100vh; padding-top: 100px; box-sizing: border-box; }
+        .view.active { display: block; animation: fadeIn 0.6s ease forwards; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px 100px; }
+
+        /* Home Social Hub */
+        .home-socials {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .home-socials a {
+            color: white;
+            font-size: 1.6rem;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0.5;
+        }
+
+        .home-socials a:hover {
+            color: var(--accent);
+            opacity: 1;
+            transform: scale(1.2) translateY(-5px);
+        }
+
+        /* Professional Glass Cards */
+        .glass-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px; padding: 35px;
+            transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            backdrop-filter: blur(8px);
+        }
+
+        .glass-card:hover {
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .status-badge {
+            font-size: 0.65rem;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .active-badge { background: rgba(187, 134, 252, 0.2); color: var(--accent); }
+        .soon-badge { background: rgba(255, 255, 255, 0.05); color: #777; border: 1px solid var(--border); }
+
+        .section-title { margin-top: 80px; margin-bottom: 40px; text-align: center; }
+        .section-title h2 { font-size: 2.8rem; font-weight: 900; margin: 0; letter-spacing: -1px; }
+        .section-title p { color: var(--text-dim); text-transform: uppercase; letter-spacing: 5px; font-size: 0.75rem; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+
+        /* Tournament Specifics */
+        .prize-tag { font-size: 4rem; color: var(--gold); font-weight: 900; display: block; margin: 15px 0; text-shadow: 0 0 30px rgba(255, 215, 0, 0.2); }
+        
+        .btn-action {
+            display: inline-block; padding: 18px 45px; background: #fff; color: #000;
+            text-decoration: none; border-radius: 14px; font-weight: 900; transition: 0.3s;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        .btn-action:hover { transform: scale(1.05); background: var(--accent); color: #fff; }
+
+        .news-link-card { cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div id="particles-js"></div>
+
+    <nav>
+        <div class="nav-container">
+            <a onclick="showView('home')" id="nav-home" class="active">Home</a>
+            <a onclick="showView('links')" id="nav-links">Links</a>
+            <a onclick="showView('ecn')" id="nav-ecn">ECN</a>
+            <a onclick="showView('news')" id="nav-news">News</a>
+        </div>
+    </nav>
+
+    <section id="home" class="view active">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 60px;">
+                <img src="channels4_profile.jpg" alt="mystersvz" style="width:130px; height:130px; border-radius:40px; border:1px solid var(--border); margin-bottom:20px; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
+                <h1 style="font-size: clamp(3rem, 8vw, 5rem); font-weight: 900; margin:0; background: linear-gradient(to bottom, #fff, #888); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">mystersvz</h1>
+                <p style="color: var(--accent); letter-spacing: 6px; font-weight: 600;">VISUAL ARTS • POST-PRODUCTION</p>
+                
+                <div class="home-socials">
+                    <a href="https://discord.gg/eP4uMXNS"><i class="fab fa-discord"></i></a>
+                    <a href="https://www.instagram.com/myster.svz/"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/@Myster_SVZ"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.tiktok.com/@myster.svz"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+
+            <div class="section-title">
+                <p>Curriculum</p>
+                <h2>Active within few weeks</h2>
+            </div>
+            <div class="grid">
+                <div class="glass-card">
+                    <span class="status-badge active-badge">SOON</span>
+                    <h3>Visual Flow</h3>
+                    <p>Mastering the graph editor for organic, high-tier motion interpolation.</p>
+                </div>
+                <div class="glass-card">
+                    <span class="status-badge active-badge">SOON</span>
+                    <h3>Transition</h3>
+                    <p>Advanced timing principles for kinetic typography and cinematic transitions.</p>
+                </div>
+            </div>
+
+            <div class="section-title">
+                <p>The Pipeline</p>
+                <h2>Coming Soon</h2>
+            </div>
+            <div class="grid">
+                <div class="glass-card">
+                    <span class="status-badge soon-badge">IN DEVELOPMENT</span>
+                    <h3>Advanced After Effects</h3>
+                    <p>Expression-based automation and professional VFX compositing techniques.</p>
+                </div>
+                <div class="glass-card">
+                    <span class="status-badge soon-badge">IN DEVELOPMENT</span>
+                    <h3>3D Animation</h3>
+                    <p>Spatial composition and Octane rendering within Blender 4.0.</p>
+                </div>
+                <div class="glass-card">
+                    <span class="status-badge soon-badge">IN DEVELOPMENT</span>
+                    <h3>2D Vector Motion</h3>
+                    <p>Classic animation physics applied to digital vector illustrations.</p>
+                </div>
+                <div class="glass-card">
+                    <span class="status-badge soon-badge">IN DEVELOPMENT</span>
+                    <h3>Color Grading</h3>
+                    <p>Professional cinematic look development using Davinci Resolve.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="links" class="view">
+        <div class="container">
+            <div style="max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px;">
+                <div style="text-align: center; margin-bottom: 40px;">
+                    <h2>Social Gateway</h2>
+                    <p style="color: var(--text-dim); letter-spacing: 2px;">Connect with the studio</p>
+                </div>
+                <a href="https://discord.gg/eP4uMXNS" class="glass-card" style="text-align: center; text-decoration: none; color: white; display: flex; align-items: center; justify-content: center; gap: 15px; padding: 25px;"><i class="fab fa-discord"></i> JOIN DISCORD</a>
+                <a href="https://www.instagram.com/myster.svz/" class="glass-card" style="text-align: center; text-decoration: none; color: white; display: flex; align-items: center; justify-content: center; gap: 15px; padding: 25px;"><i class="fa fa-instagram" aria-hidden="true"></i>
+ FOLLOW INSTAGRAM</a>
+                <a href="https://www.youtube.com/@Myster_SVZ" class="glass-card" style="text-align: center; text-decoration: none; color: white; display: flex; align-items: center; justify-content: center; gap: 15px; padding: 25px;"><i class="fab fa-youtube"></i> SUBSCRIBE YOUTUBE</a>
+                <a href="https://www.tiktok.com/@myster.svz" class="glass-card" style="text-align: center; text-decoration: none; color: white; display: flex; align-items: center; justify-content: center; gap: 15px; padding: 25px;"><i class="fab fa-tiktok"></i> TIKTOK FEED</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="ecn" class="view">
+        <div class="container">
+            <div class="glass-card" style="text-align: center; border-color: var(--gold);">
+                <span class="status-badge" style="background: var(--gold); color: #000;">TOURNAMENT LIVE</span>
+                <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); margin: 15px 0;">Editing Competition Nepal</h1>
+                <p style="color: #bbb; max-width: 600px; margin: 0 auto;">Exclusive tournament designed for the elite Nepalese editing community.</p>
+                <hr style="border: 0; border-top: 1px solid var(--border); margin: 40px 0;">
+                
+                <a href="https://forms.gle/NsGCvxwaXXkzJJQD6" class="btn-action">REGISTER NOW</a>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; text-align: left; margin-top: 50px;">
+                    <div style="background: rgba(255,255,255,0.02); padding: 20px; border-radius: 15px;">
+                        <h4 style="color: var(--accent); margin-top: 0;">EDITING CATEGORIES</h4>
+                        <p style="margin-bottom: 0;">• Movie Edits / AMV<br>• Typography / Motion Graphics</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.02); padding: 20px; border-radius: 15px;">
+                        <h4 style="color: var(--accent); margin-top: 0;">COMPETITION ASSETS</h4>
+                        <p style="margin-bottom: 0;"><a href="#" style="color:#fff; text-decoration: none;">Download Song Link <i class="fas fa-external-link-alt" style="font-size: 0.7rem;"></i></a><br><a href="#" style="color:#fff; text-decoration: none;">Download Clips Link <i class="fas fa-external-link-alt" style="font-size: 0.7rem;"></i></a></p>
+                    </div>
+                </div>
+
+                <span class="prize-tag">5,000 NPR</span>
+                <p style="font-weight: 900; letter-spacing: 3px; color: var(--text-dim); text-transform: uppercase;">Total Prize Pool</p>
+                
+                <a href="#" class="btn-action" style="background: var(--accent); color: #fff; margin-top: 30px;">SUBMIT ENTRY</a>
+
+                <div style="margin-top: 60px; padding: 40px; background: rgba(0,0,0,0.5); border-radius: 25px; text-align: left; border: 1px solid var(--border);">
+                    <h3>About ECN Season 1</h3>
+                    <p style="line-height: 1.8; color: #aaa;">ECN is Nepal's premier platform for post-production excellence. We aim to highlight the technical skill and creative vision of editors across the nation. Show us your best work.</p>
+                    <div style="margin-top: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+                        <span style="font-size: 0.75rem; color: var(--text-dim); letter-spacing: 2px;">POWERED BY 8848 STUDIOS</span>
+                        <div style="display: flex; gap: 15px;">
+                            <a href="#" style="color: var(--text-dim);"><i class="fab fa-discord"></i></a>
+                            <a href="#" style="color: var(--text-dim);"><i class="fab fa-instagram"></i></a>
+                            <a href="#" style="color: var(--text-dim);"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="news" class="view">
+        <div class="container">
+            <h1 style="text-align: center; margin-bottom: 50px;">Press Releases</h1>
+            <div class="glass-card news-link-card" onclick="showView('ecn')">
+                <div style="border-left: 4px solid var(--accent); padding-left: 25px;">
+                    <span style="color: var(--accent); font-size: 0.85rem; font-weight: 800; letter-spacing: 1px;">FEBRUARY 02, 2026</span>
+                    <h3 style="font-size: 1.8rem; margin: 10px 0;">ECN Season 1 Registration Open</h3>
+                    <p style="color: var(--text-dim); font-size: 1.1rem;">Official registration for the Editing Competition Nepal has commenced. Click this card to view tournament requirements and prize details.</p>
+                    <span style="color: #fff; font-size: 0.8rem; font-weight: 600;">READ MORE →</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        /* View Navigation Logic */
+        function showView(viewId) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+            
+            document.querySelectorAll('.nav-container a').forEach(a => a.classList.remove('active'));
+            document.getElementById('nav-' + viewId).classList.add('active');
+            
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        /* Full Screen Snow Particles */
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 160, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#ffffff" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.4, "random": true },
+                "size": { "value": 3, "random": true },
+                "move": { 
+                    "enable": true, 
+                    "speed": 1.8, 
+                    "direction": "bottom", 
+                    "random": true, 
+                    "straight": false, 
+                    "out_mode": "out" 
+                }
+            },
+            "interactivity": {
+                "events": { "onhover": { "enable": true, "mode": "bubble" } },
+                "modes": { "bubble": { "distance": 200, "size": 4, "duration": 0.3, "opacity": 0.8 } }
+            },
+            "retina_detect": true
+        });
+    </script>
+</body>
+</html>
